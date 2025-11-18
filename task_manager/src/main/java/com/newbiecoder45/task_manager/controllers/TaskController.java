@@ -74,6 +74,15 @@ public class TaskController {
     //     }
     // }
 
+    /*
+     * Why this matters:
+
+        The @Valid annotation tells Spring to automatically trigger validation before 
+        calling your service.
+
+        If validation fails → an exception (MethodArgumentNotValidException) is 
+        thrown automatically.
+     */
 
     @PostMapping("addTasks")
     public ResponseEntity createTaskResponse(@Valid @RequestBody TaskRequest taskRequest) {

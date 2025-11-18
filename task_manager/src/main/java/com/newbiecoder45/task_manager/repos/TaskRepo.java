@@ -6,4 +6,6 @@ import com.newbiecoder45.task_manager.model.Task;
 
 public interface TaskRepo extends JpaRepository<Task, Long>{
 
+    boolean existsByTitle(String title);
+
 }
