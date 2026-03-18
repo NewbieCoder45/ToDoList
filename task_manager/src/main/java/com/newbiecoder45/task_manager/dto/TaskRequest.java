@@ -1,29 +1,23 @@
 package com.newbiecoder45.task_manager.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import com.newbiecoder45.task_manager.model.TaskStatus;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
 public class TaskRequest {
     @NotBlank(message = "Task title cannot be empty")
-    @Size(max = 250, message = "Title cannot exceed 250 characters.")
+    @Size(max = 150, message = "Title cannot exceed 150 characters.")
     private String title;
 
-    @NotBlank(message = "Status required")
-    private String status;
+    @NotNull(message = "Status required")
+    private TaskStatus status;
     
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }

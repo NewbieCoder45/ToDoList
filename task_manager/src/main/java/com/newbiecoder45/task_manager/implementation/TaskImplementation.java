@@ -32,8 +32,8 @@ public class TaskImplementation implements TaskService{
         }
 
         Task task = new Task();
-        task.setTitle(taskRequest.getTitle());    
         task.setStatus(taskRequest.getStatus());
+        task.setTitle(taskRequest.getTitle());
         taskRepo.save(task);
         return new TaskResponse(task.getId(), task.getTitle(), task.getStatus());
     }
@@ -63,9 +63,11 @@ public class TaskImplementation implements TaskService{
     }
 
     @Override
-    public void deleteTasksById(Long id){
+    public String deleteTasksById(Long id){
         Task task = taskRepo.findById(id)
                             .orElseThrow(() -> new EntityNotFoundException("Task with ID " + id + " not found."));
         taskRepo.delete(task);
+
+        return "Task deleted successfully";
     }
 }

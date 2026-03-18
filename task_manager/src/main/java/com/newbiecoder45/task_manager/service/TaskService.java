@@ -21,5 +21,5 @@ public interface TaskService {
     // 3. Update
     TaskResponse updateTasksById(Long id, TaskRequest taskRequest);
     // 4. Delete
-    void deleteTasksById(Long id);
+    String deleteTasksById(Long id);
 }
