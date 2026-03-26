@@ -2,6 +2,8 @@ package com.newbiecoder45.task_manager.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,6 +25,9 @@ public class Task {
     @Column(name ="task_title")
     private String title;
     
-    @Column(nullable = false)
+    @Column(nullable = false,
+        name = "task_status"
+    )
+    @Enumerated(EnumType.STRING)
     private TaskStatus status;
 }

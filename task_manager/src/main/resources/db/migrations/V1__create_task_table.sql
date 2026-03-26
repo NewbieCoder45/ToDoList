@@ -1,0 +1,5 @@
+CREATE TABLE tasks (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    task_title VARCHAR(150) UNIQUE NOT NULL,
+    task_status VARCHAR(50) NOT NULL
+)
