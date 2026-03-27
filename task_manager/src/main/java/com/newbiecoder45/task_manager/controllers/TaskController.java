@@ -2,6 +2,9 @@ package com.newbiecoder45.task_manager.controllers;
 
 import java.util.List;
 
+import org.hibernate.query.SortDirection;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -20,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -70,6 +75,33 @@ public class TaskController {
     public ResponseEntity<String> deleteTasksResp(@Positive @PathVariable Long id){
         return ResponseEntity.ok().body(taskService.deleteTasksById(id));
 
+    }
+
+
+    // Pagination
+    @GetMapping("/getAllTasks/{offset}/{pageSize}")
+    public ResponseEntity<Page<TaskResponse>> getAllTasksByPagination(
+        @PathVariable Integer offset, 
+        @PathVariable Integer pageSize) {
+        return ResponseEntity.ok().body(taskService.getAllTasksPage(offset, pageSize));
+    }
+    
+    // Sorting
+    @GetMapping("/getAllTasks/{field}")
+    public ResponseEntity<List<TaskResponse>> getAllSortedTasks(
+        @PathVariable String field
+    ) {
+        return ResponseEntity.ok().body(taskService.getAllSortedTasks(Sort.Direction.ASC, field));
+    }
+    
+    // Pagination and Sorting
+    @GetMapping("/getAllTasks/{offset}/{pageSize}/{field}")
+    public ResponseEntity<Page<TaskResponse>> getAllTasksBySortingAndPagination(
+        @PathVariable Integer offset,
+        @PathVariable Integer pageSize,
+        @PathVariable String field
+    ) {
+        return ResponseEntity.ok().body(taskService.getAllTasksPageAndSorted(offset, pageSize, field, Sort.Direction.ASC));
     }
     
 }

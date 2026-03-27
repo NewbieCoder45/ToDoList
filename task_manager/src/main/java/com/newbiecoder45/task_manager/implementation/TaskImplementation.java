@@ -2,6 +2,9 @@ package com.newbiecoder45.task_manager.implementation;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -69,5 +72,30 @@ public class TaskImplementation implements TaskService{
         taskRepo.delete(task);
 
         return "Task deleted successfully";
+    }
+
+    @Override
+    public Page<TaskResponse> getAllTasksPage(Integer offset, Integer pageSize){
+       return taskRepo.findAll(PageRequest.of(offset, pageSize)).map(
+            t -> new TaskResponse(t.getId(), t.getTitle(), t.getStatus())
+        );
+    }
+
+    // Sorting
+
+    @Override
+    public List<TaskResponse> getAllSortedTasks(Sort.Direction dir, String field){
+        return taskRepo.findAll(Sort.by(dir, field)).stream().map(
+            t -> new TaskResponse(t.getId(), t.getTitle(), t.getStatus())
+        ).toList();
+    }
+
+    //Sorting and Pagination
+
+    @Override
+    public Page<TaskResponse> getAllTasksPageAndSorted(Integer offset, Integer pageSize, String field, Sort.Direction direction){
+       return taskRepo.findAll(PageRequest.of(offset, pageSize).withSort(Sort.by(direction, field))).map(
+        t -> new TaskResponse(t.getId(), t.getTitle(), t.getStatus())
+       );
     }
 }
